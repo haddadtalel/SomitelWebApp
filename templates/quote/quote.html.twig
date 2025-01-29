@@ -1,0 +1,41 @@
+{% extends 'index.html.twig' %}
+{% block title %}Request a Quote{% endblock %}
+
+{% block body %}
+<div class="container py-5">
+    <h1 class="mb-4">Request a Quote</h1>
+    
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success">{{ message }}</div>
+    {% endfor %}
+
+    {{ form_start(form) }}
+        <div class="row g-3">
+            <div class="col-md-6">
+                {{ form_row(form.name) }}
+            </div>
+            <div class="col-md-6">
+                {{ form_row(form.LastName) }}
+            </div>
+            <div class="col-md-6">
+                {{ form_row(form.Company) }}
+            </div>
+            <div class="col-md-6">
+                {{ form_row(form.Position) }}
+            </div>
+            <div class="col-md-6">
+                {{ form_row(form.Phone) }}
+            </div>
+            <div class="col-md-6">
+                {{ form_row(form.Service) }}
+            </div>
+            <div class="col-12">
+                {{ form_row(form.Message) }}
+            </div>
+            <div class="col-12">
+                {{ form_row(form.submit) }}
+            </div>
+        </div>
+    {{ form_end(form) }}
+</div>
+{% endblock %}
