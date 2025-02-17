@@ -35,6 +35,9 @@ class Quote
     #[ORM\Column(length: 255)]
     private ?string $Service = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $address = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -120,6 +123,18 @@ class Quote
     public function setService(string $Service): static
     {
         $this->Service = $Service;
+
+        return $this;
+    }
+
+    public function getAddress(): ?string
+    {
+        return $this->address;
+    }
+
+    public function setAddress(string $address): static
+    {
+        $this->address = $address;
 
         return $this;
     }

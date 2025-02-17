@@ -10,8 +10,8 @@
                             <div class="p-3" style="max-width: 900px;  ">
                                 <h5 class="text-white text-uppercase mb-3 animated slideInDown">Creative & Innovative</h5>
                                 <h1 class="display-1 text-white mb-md-4 animated zoomIn">Creative & Innovative Digital Solution</h1>
-                                <a href="{{path('app_quote')}}" class="btn btn-primary py-md-3 px-md-5 me-3 animated slideInLeft">Free Quote</a>
-                                <a href="" class="btn btn-outline-light py-md-3 px-md-5 animated slideInRight">Contact Us</a>
+                                <a href="" class="btn btn-primary py-md-3 px-md-5 me-3 animated slideInLeft">Products</a>
+                                <a href="{{path('app_quote')}}" class="btn btn-outline-light py-md-3 px-md-5 animated slideInRight">Contact Us</a>
                             </div>
                         </div>
                     </div>
@@ -21,8 +21,8 @@
                             <div class="p-3" style="max-width: 900px;">
                                 <h5 class="text-white text-uppercase mb-3 animated slideInDown">Creative & Innovative</h5>
                                 <h1 class="display-1 text-white mb-md-4 animated zoomIn">Creative & Innovative Digital Solution</h1>
-                                <a href="{{path('app_quote')}}" class="btn btn-primary py-md-3 px-md-5 me-3 animated slideInLeft">Free Quote</a>
-                                <a href="" class="btn btn-outline-light py-md-3 px-md-5 animated slideInRight">Contact Us</a>
+                                <a href="" class="btn btn-primary py-md-3 px-md-5 me-3 animated slideInLeft">Products</a>
+                                <a href="{{path('app_quote')}}" class="btn btn-outline-light py-md-3 px-md-5 animated slideInRight">Contact Us</a>
                             </div>
                         </div>
                     </div>
@@ -125,8 +125,8 @@
     </div>
     <!-- About End -->
 </section>
+<!-- /Services Section -->
 
-    <!-- Service Start -->
 <section id="Service">
     <div class="container-fluid py-5 wow fadeInUp" data-wow-delay="0.1s">
         <div class="container py-5">
@@ -137,24 +137,21 @@
             <div class="row g-5">
                 {% for service in services %}
                     <div class="col-lg-4 col-md-6 wow zoomIn" data-wow-delay="0.{{ loop.index * 2 }}s">
-                        <div class="service-item bg-light rounded d-flex flex-column align-items-center justify-content-center text-center">
+                        <div class="service-item bg-light rounded d-flex flex-column align-items-center text-center position-relative">
+                            <a href="" class="stretched-link"></a> 
                             <div class="service-icon">
                                 <i class="{{ service.icon }}"></i>
                             </div>
-                            <h4 class="mb-3">{{ service.title }}</h4>
-                            <p class="m-0">{{ service.description }}</p>
-                            <span class="full-description collapse" id="desc-{{ service.id }}">{{ service.fullDescription }}</span>
-                            <button class="btn btn-lg btn-primary rounded expand-btn" data-bs-toggle="collapse" data-bs-target="#desc-{{ service.id }}">
-                                <i class="bi bi-arrow-down-circle"></i>
-                            </button>
+                            <h4 class="mb-3 px-2">{{ service.title }}</h4>
+                            <p class="m-0 px-3">{{ service.description }}</p>
                         </div>
                     </div>
                 {% endfor %}
-
             </div>
         </div>
     </div>
 </section>
+
 
     <!-- Service End -->
 
@@ -207,9 +204,7 @@
                                     </div>
     
                                     <!-- Company and Phone Number Side by Side -->
-                                    <div class="col-md-6">
-                                        {{ form_row(form.Company) }}
-                                    </div>
+
                                     <div class="col-md-6">
                                         {{ form_row(form.Phone) }}
                                     </div>
@@ -218,10 +213,16 @@
                                     <div class="col-md-6">
                                         {{ form_row(form.Position) }}
                                     </div>
+
                                     <div class="col-md-6">
-                                        {{ form_row(form.Service) }}
+                                        {{ form_row(form.Company) }}
+                                    </div> 
+                                    <div class="col-md-6">
+                                        {{ form_row(form.Address) }}
                                     </div>
-    
+                                    <div class="col-md-12">
+                                        {{ form_row(form.Service) }}
+                                    </div>    
                                     <!-- Message Field -->
                                     <div class="col-12">
                                         {{ form_row(form.Message) }}

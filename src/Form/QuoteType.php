@@ -55,6 +55,14 @@ class QuoteType extends AbstractType
                 ],
                 'required' => true,
             ])
+            ->add('Address', TextType::class, [
+                'attr' => [
+                    'class' => 'form-control bg-light border-0',
+                    'placeholder' => 'Address',
+                    'style' => 'height: 55px;',
+                ],
+                'required' => true,
+            ])
             ->add('Position', ChoiceType::class, [
                 'choices' => array_combine($positions, $positions),
                 'placeholder' => 'Select A Position',

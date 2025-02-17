@@ -1,0 +1,37 @@
+{% extends 'service/index.html.twig' %}
+
+{% block body %}
+    <h1>Service</h1>
+    {%for service in services %}
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ service.id }}</td>
+            </tr>
+            <tr>
+                <th>Title</th>
+                <td>{{ service.title }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ service.description }}</td>
+            </tr>
+            <tr>
+                <th>Icon</th>
+                <td>{{ service.icon }}</td>
+            </tr>
+            <tr>
+                <th>FullDescription</th>
+                <td>{{ service.fullDescription }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_service_index') }}">back to list</a>
+
+    <a href="{{ path('app_service_edit', {'id': service.id}) }}">edit</a>
+
+    {{ include('service/_delete_form.html.twig') }}
+    {% endfor %}
+{% endblock %}

@@ -1,11 +1,53 @@
 /********** Template CSS **********/
 :root {
-    --primary: #06A3DA;
-    --secondary: #34AD54;
-    --light: #EEF9FF;
-    --dark: #091E3E;
+    --primary: #0D93D8; /* Adjusted to match the blue theme */
+    --secondary: #0077B6; /* Slightly darker blue for contrast */
+    --light: #EEF9FF; /* Keeping this as it fits well */
+    --dark: #091E3E; /* Works well with the existing theme */
+    --default-color: #333333; /* Slightly darker for better readability */
+    --surface-color: #FFFFFF; /* White for clean, modern look */
+    --contrast-color: #1A1A1A; /* Adjusted for better readability */
+    
+    /* Font Variables */
+    --default-font: "Roboto", system-ui, sans-serif;
+    --heading-font: "Raleway", sans-serif;
+    --nav-font: "Poppins", sans-serif;
+
+    /* Global Colors */
+    --background-color: #F8FBFF; /* Light blueish background */
+    --default-color: #444444;
+    --heading-color: #0A4D68; /* Stronger blue for headings */
+    --accent-color: #0088CC; /* A more vibrant blue for buttons and accents */
+    --surface-color: #FFFFFF;
+    --contrast-color: #222222;
+
+    /* Nav Menu Colors */
+    --nav-color: rgba(255, 255, 255, 0.9);
+    --nav-hover-color: #0088CC; /* Brighter hover effect */
+    --nav-mobile-background-color: #FFFFFF;
+    --nav-dropdown-background-color: #F8FBFF;
+    --nav-dropdown-color: #212529;
+    --nav-dropdown-hover-color: #0088CC;
+
+    /* Smooth Scroll */
+    scroll-behavior: smooth;
 }
 
+/* Color Presets */
+.light-background {
+    --background-color: #F0F8FF;
+    --surface-color: #FFFFFF;
+}
+
+.dark-background {
+    --background-color: #0A1F44;
+    --default-color: #FFFFFF;
+    --heading-color: #FFFFFF;
+    --surface-color: #1C1C1C;
+    --contrast-color: #2A2727;
+}
+
+  
 
 /*** Spinner ***/
 .spinner {
@@ -136,6 +178,10 @@ h6,
     font-weight: 600;
     outline: none;
     transition: .5s;
+}
+
+.small-nav .navbar-nav .nav-link {
+    padding: 15px 0; /* Adjust as needed */
 }
 
 .sticky-top.navbar-dark .navbar-nav .nav-link {
@@ -530,40 +576,189 @@ h6,
     height: 55px;
     border-radius: 5px;
 }
-
+/*service section*/
 .service-item {
-    padding: 20px;
-    transition: all 0.3s ease-in-out;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 }
 
-.service-item .service-icon {
-    font-size: 40px;
-    color: #007bff;
-    margin-bottom: 15px;
+.service-item:hover {
+    transform: scale(1.05);
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
 }
 
-.service-text {
+  /*service section end*/
+  
+/*service detail  section*/
+.service-detail {
+    color: var(--default-color);
+    background-color: var(--background-color);
+    position: relative;
+  }
+  
+  .service-detail .heading {
+    padding: 80px 0;
+    border-top: 1px solid color-mix(in srgb, var(--default-color), transparent 90%);
+  }
+  
+  .service-detail .heading h1 {
+    font-size: 38px;
+    font-weight: 700;
+  }
+  
+  .service-detail nav {
+    background-color: color-mix(in srgb, var(--default-color), transparent 95%);
+    padding: 20px 0;
+  }
+  
+  .service-detail nav ol {
+    display: flex;
+    flex-wrap: wrap;
+    list-style: none;
+    margin: 0;
+    padding: 0;
     font-size: 16px;
-    color: #333;
-    text-align: center;
-    max-width: 90%;
-}
-
-.full-description {
-    display: inline; /* Keep it inline instead of block */
-    font-weight: normal;
-    color: #555;
-    transition: opacity 0.3s ease-in-out;
-}
-
-.expand-btn {
-    margin-top: 10px;
-}
-
-.expand-btn i {
-    transition: transform 0.3s ease-in-out;
-}
-
-.expand-btn[aria-expanded="true"] i {
-    transform: rotate(180deg);
-}
+    font-weight: 400;
+  }
+  
+  .service-detail nav ol li+li {
+    padding-left: 10px;
+  }
+  
+  .service-detail nav ol li+li::before {
+    content: "/";
+    display: inline-block;
+    padding-right: 10px;
+    color: color-mix(in srgb, var(--default-color), transparent 70%);
+  }
+  
+.service-details .service-box {
+    background-color: var(--surface-color);
+    padding: 20px;
+    box-shadow: 0px 2px 20px rgba(0, 0, 0, 0.1);
+  }
+  
+  .service-details .service-box+.service-box {
+    margin-top: 30px;
+  }
+  
+  .service-details .service-box h4 {
+    font-size: 20px;
+    font-weight: 700;
+    border-bottom: 2px solid color-mix(in srgb, var(--default-color), transparent 92%);
+    padding-bottom: 15px;
+    margin-bottom: 15px;
+  }
+  
+  .service-details .services-list {
+    background-color: var(--surface-color);
+  }
+  
+  .service-details .services-list a {
+    color: color-mix(in srgb, var(--default-color), transparent 20%);
+    background-color: color-mix(in srgb, var(--default-color), transparent 96%);
+    display: flex;
+    align-items: center;
+    padding: 12px 15px;
+    margin-top: 15px;
+    transition: 0.3s;
+  }
+  
+  .service-details .services-list a:first-child {
+    margin-top: 0;
+  }
+  
+  .service-details .services-list a i {
+    font-size: 16px;
+    margin-right: 8px;
+    color: var(--accent-color);
+  }
+  
+  .service-details .services-list a.active {
+    color: var(--contrast-color);
+    background-color: var(--accent-color);
+  }
+  
+  .service-details .services-list a.active i {
+    color: var(--contrast-color);
+  }
+  
+  .service-details .services-list a:hover {
+    background-color: color-mix(in srgb, var(--accent-color), transparent 95%);
+    color: var(--accent-color);
+  }
+  
+  .service-details .download-catalog a {
+    color: var(--default-color);
+    display: flex;
+    align-items: center;
+    padding: 10px 0;
+    transition: 0.3s;
+    border-top: 1px solid color-mix(in srgb, var(--default-color), transparent 90%);
+  }
+  
+  .service-details .download-catalog a:first-child {
+    border-top: 0;
+    padding-top: 0;
+  }
+  
+  .service-details .download-catalog a:last-child {
+    padding-bottom: 0;
+  }
+  
+  .service-details .download-catalog a i {
+    font-size: 24px;
+    margin-right: 8px;
+    color: var(--accent-color);
+  }
+  
+  .service-details .download-catalog a:hover {
+    color: var(--accent-color);
+  }
+  
+  .service-details .help-box {
+    background-color: var(--accent-color);
+    color: var(--contrast-color);
+    margin-top: 30px;
+    padding: 30px 15px;
+  }
+  
+  .service-details .help-box .help-icon {
+    font-size: 48px;
+  }
+  
+  .service-details .help-box h4,
+  .service-details .help-box a {
+    color: var(--contrast-color);
+  }
+  
+  .service-details .services-img {
+    margin-bottom: 20px;
+  }
+  
+  .service-details h3 {
+    font-size: 26px;
+    font-weight: 700;
+  }
+  
+  .service-details p {
+    font-size: 15px;
+  }
+  
+  .service-details ul {
+    list-style: none;
+    padding: 0;
+    font-size: 15px;
+  }
+  
+  .service-details ul li {
+    padding: 5px 0;
+    display: flex;
+    align-items: center;
+  }
+  
+  .service-details ul i {
+    font-size: 20px;
+    margin-right: 8px;
+    color: var(--accent-color);
+  }
+  
