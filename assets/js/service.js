@@ -1,3 +1,15 @@
+document.addEventListener("DOMContentLoaded", function () {
+    let navbar = document.querySelector(".navbar");
+
+    window.addEventListener("scroll", function () {
+        if (window.scrollY > 50) {
+            navbar.classList.add("navbar-scrolled");
+        } else {
+            navbar.classList.remove("navbar-scrolled");
+        }
+    });
+});
+
 document.addEventListener('DOMContentLoaded', function () {
     const serviceLinks = document.querySelectorAll('.service-link');
 

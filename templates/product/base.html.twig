@@ -26,8 +26,7 @@
 
     <!-- Template Stylesheet -->
     <link href="{{asset('css/style.css')}}" rel="stylesheet" type="text/css">
-
-    <link href="{{asset('css/service.css')}}" rel="stylesheet" type="text/css">
+    <link href="{{asset('css/product.css')}}" rel="stylesheet" type="text/css">
 </head>
 
 <body>
@@ -59,109 +58,159 @@
             </div>
         </div>
     </div>
-<!-- Topbar End -->
+    <!-- Topbar End -->
 
-<!-- Navbar & Carousel Start -->
-<section id="service-nav" class="service-nav">
-    <div class="container-fluid position-relative p-0">
-        <nav class="navbar navbar-expand-lg px-5 py-3 py-lg-0 
-    {% if app.request.attributes.get('_route') == 'app_service_index' %} navbar-dark bg-dark {% else %} navbar-light {% endif %} small-nav">
-        <a href="{{path('app_home')}}" class="navbar-brand p-0">
-            <h1 class="m-0">SOMITEL</h1>
-        </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-                <span class="fa fa-bars"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarCollapse">
-                <div class="navbar-nav ms-auto py-0">
-                    <a href="{{ path('app_home') }}" class="nav-item nav-link active">Home</a>
-                    <a href="#about" class="nav-item nav-link">About</a>
-                    <a href="#Service" class="nav-item nav-link">Services</a>
-                    <a href="contact.html" class="nav-item nav-link">Contact</a>
-                </div>
-                <button type="button" class="btn text-primary ms-3" data-bs-toggle="modal" data-bs-target="#searchModal">
-                    <i class="fa fa-search"></i>
+
+    <!-- Navbar & Carousel Start -->
+    <section id="product-nav" class="product-nav">
+        <div class="container-fluid position-relative p-0">
+            <nav class="navbar navbar-expand-lg px-5 py-3 py-lg-0 
+        {% if app.request.attributes.get('_route') == 'app_product_index' %} navbar-dark bg-dark {% else %} navbar-light {% endif %} small-nav">
+            <a href="{{path('app_home')}}" class="navbar-brand p-0">
+                <h1 class="m-0">SOMITEL</h1>
+            </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                    <span class="fa fa-bars"></span>
                 </button>
+                <div class="collapse navbar-collapse" id="navbarCollapse">
+                    <div class="navbar-nav ms-auto py-0">
+                        <a href="{{ path('app_home') }}" class="nav-item nav-link active">Home</a>
+                        <a href="#about" class="nav-item nav-link">About</a>
+                        <a href="#Service" class="nav-item nav-link">Services</a>
+                        <a href="contact.html" class="nav-item nav-link">Contact</a>
+                    </div>
+                    <button type="button" class="btn text-primary ms-3" data-bs-toggle="modal" data-bs-target="#searchModal">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </div>
+            </nav>
+        </div>
+    </section>
+<!-- Navbar & Carousel end -->
+    
+<!-- Product Head -->
+<section id="product-head" class="product-head section">
+    <div class="container-fluid py-5 wow fadeInUp" data-wow-delay="0.1s">
+        <div class="container">
+            <div class="section-title text-center position-relative pb-3 mb-5 mx-auto" style="max-width: 600px;">
+                <h5 class="fw-bold text-primary text-uppercase">Our Products</h5>
+                <h1 class="mb-0">Professional IT Solutions & Security Systems</h1>
+            </div>
+
+        <!-- Breadcrumb Navigation -->
+        <nav class="product-breadcrumbs">
+            <div class="container">
+                <ol>
+                <li><a href="{{ path('app_home') }}">Home</a></li>
+                <li class="current">Products</li>
+                </ol>
             </div>
         </nav>
     </div>
 </section>
-<!-- Navbar & Carousel end -->
+<!-- End Product Head -->
 
-<!-- Service Head -->
-<section id="service-head" class="service-head section">
-    <div class="container-fluid py-5 wow fadeInUp" data-wow-delay="0.1s">
-        <div class="container">
-            <div class="section-title text-center position-relative pb-3 mb-5 mx-auto" style="max-width: 600px;">
-                <h5 class="fw-bold text-primary text-uppercase">Our Services</h5>
-                <h1 class="mb-0">Professional IT Solutions & Security Systems</h1>
-            </div>
+<!-- Products Section -->
+<section id="products-detail" class="products-detail section">
     
-            <!-- Breadcrumb Navigation -->
-            <nav class="service-breadcrumbs">
-            <div class="container">
-                <ol>
-                <li><a href="{{ path('app_home') }}">Home</a></li>
-                <li class="current">Service Details</li>
-                </ol>
-            </div>
-            </nav>
-        </div>
-    </div>
-</section>
-<!-- End Service Head -->
-
-
-<!-- Service Details Section -->
-<section id="service-details" class="service-details section">
+<div class="container-fluid py-5 wow fadeInUp" data-wow-delay="0.3s">
     <div class="container">
-      <div class="row gy-5">
-        <!-- Left Column - Service List -->
-        <div class="col-lg-4">
-          <div class="service-box">
-            <h4>Services List</h4>
-            <div class="services-list">
-              {% for service in services %}
-                <a href="" data-id="{{ service.id }}" class="service-link">
-                  <i class="bi bi-arrow-right-circle"></i>
-                  <span>{{ service.title }}</span>
-                </a>
-              {% endfor %}
-            </div>
-          </div>
-        </div>
-  
-        <!-- Right Column - Service Details -->
-        <div class="col-lg-8 ps-lg-5 fade show" id="service-details-content">
-          <h3 class="animate__animated animate__fadeInUp" id="service-title">Select a service to view details</h3>
-          <p class="animate__animated animate__fadeIn" id="service-description">
-            Click on a service to see the full details.
-          </p>
-        </div>
-      </div>
-    </div>
-  </section>
-<!-- End Service Details Section -->
+        <div class="row g-5">
+            <!-- Filter Sidebar -->
+            <div class="col-lg-3">
+                <div class="filter-box bg-light p-4 mb-5 wow slideInUp" data-wow-delay="0.2s">
+                    <h4 class="text-primary mb-4">Categories</h4>
+                    <div class="mb-4">
+                        {% for category in ['Networking Equipment', 'PABX & Telephony', 'Fire Safety Solutions', 'Security & Access Control', 'Networking Accessories', 'Power & Electrical Solutions'] %}
+                        <div class="d-flex align-items-center mb-2">
+                            <input class="form-check-input category-filter" type="checkbox" value="{{ category }}" id="category{{ loop.index }}">
+                            <label class="form-check-label" for="category{{ loop.index }}">
+                                {{ category }}
+                            </label>
+                        </div>
+                        {% endfor %}
+                    </div>
 
-<!-- End Service Detail -->
-    <!-- Footer Start -->
+                    <h4 class="text-primary mb-4">Price Range</h4>
+                    <div class="mb-4">
+                        <input type="range" class="form-range price-filter" min="0" max="10000" id="priceRange">
+                        <div class="d-flex justify-content-between mt-2">
+                            <span class="text-primary">$0</span>
+                            <span class="text-primary">$10,000</span>
+                        </div>
+                    </div>
+
+                    <h4 class="text-primary mb-4">Brands</h4>
+                    <div class="mb-4">
+                        {% for brand in ['Avaya', 'Hikvision', 'Dahua', 'Aruba', 'Legrand', 'Extreme Networks'] %}
+                        <div class="d-flex align-items-center mb-2">
+                            <input class="form-check-input brand-filter" type="checkbox" value="{{ brand }}" id="brand{{ loop.index }}">
+                            <label class="form-check-label" for="brand{{ loop.index }}">
+                                {{ brand }}
+                            </label>
+                        </div>
+                        {% endfor %}
+                    </div>
+
+                    <button class="btn btn-primary w-100" id="applyFilters">Apply Filters</button>
+                </div>
+            </div>
+
+            <!-- Products Grid -->
+            <div class="col-lg-9">
+                <div class="row g-4" id="product-list">
+                    {% for product in products %}
+                    <div class="col-md-6 col-lg-4 product-item" data-category="{{ product.category }}" data-brand="{{ product.brand }}" data-price="{{ product.price }}">
+                        <div class="product-card bg-light rounded d-flex flex-column align-items-center text-center">
+                            <div class="product-image mb-4">
+                                <img src="{{ product.imageUrl ?: asset('img/maintenance.jpeg') }}" class="img-fluid rounded" alt="{{ product.name }}">
+                            </div>
+                            <div class="px-4 pb-4">
+                                <h4 class="mb-3">{{ product.name }}</h4>
+                                <div class="d-flex justify-content-between mb-3">
+                                    <span class="text-primary fw-bold">${{ product.price|number_format(2, '.', ',') }}</span>
+                                    <span class="badge {{ product.stockQuantity > 0 ? 'bg-success' : 'bg-danger' }}">
+                                        {{ product.stockQuantity > 0 ? 'In Stock' : 'Out of Stock' }}
+                                    </span>
+                                </div>
+                                <p class="text-muted mb-0">{{ product.brand }}</p>
+                                <p class="mb-4">{{ product.description|slice(0, 100) }}{% if product.description|length > 100 %}...{% endif %}</p>
+                                <a class="btn btn-lg btn-primary rounded" href="{{ path('app_product_show', {'id': product.id}) }}">
+                                    <i class="bi bi-arrow-right"></i> View Details
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    {% else %}
+                    <div class="col-12">
+                        <div class="alert alert-info text-center">
+                            <i class="bi bi-info-circle me-2"></i> No products found.
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</section>
+<!-- End Products Section -->
+<!-- Footer Start -->
     <div class="container-fluid bg-dark text-light mt-5 wow fadeInUp" data-wow-delay="0.1s">
         <div class="container">
             <div class="row gx-5">
                 <div class="col-lg-4 col-md-6 footer-about">
-                    <div class="d-flex flex-column align-items-center justify-content-center text-center h-100 bg-primary p-4">
-                        <a href="index.html" class="navbar-brand">
-                            <h1 class="m-0 text-white">SOMITEL</h1>
-                        </a>
-                        <p class="mt-3 mb-4">More Than Partners, We Are Family.</p>
-                        <form action="">
-                            <div class="input-group">
-                                <input type="text" class="form-control border-white p-3" placeholder="Your Email">
-                                <button class="btn btn-dark">Join Us</button>
-                            </div>
-                        </form>
-                    </div>
+                    <div class="d-flex flex-column align-items-center justify-content-center text-center h-100 bg-light p-4" 
+     style="margin-left: -50px; width: calc(100% + 50px); height: calc(100% - 50px);">
+    <iframe style="border:0; width: 100%; height: 270px;" 
+            src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d48389.78314118045!2d-74.006138!3d40.710059!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c25a22a3bda30d%3A0xb89d1fe6bc499443!2sDowntown%20Conference%20Center!5e0!3m2!1sen!2sus!4v1676961268712!5m2!1sen!2sus" 
+            frameborder="0" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+    </iframe>
+</div>
+
+                    
                 </div>
+
                 <div class="col-lg-8 col-md-6">
                     <div class="row gx-5">
                         <div class="col-lg-4 col-md-12 pt-5 mb-5">
@@ -244,8 +293,7 @@
     <!-- Template Javascript -->
     <script src="{{asset('js/main.js')}}"></script>
     <script src="{{asset('js/collapse.js')}}"></script>
-    <script src="{{asset('js/service.js')}}"></script>
-
+    <script src="{{asset('js/product.js')}}"></script>
 </body>
 
 </html>

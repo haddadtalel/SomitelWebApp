@@ -19,7 +19,7 @@ final class ServiceController extends AbstractController
     #[Route(name: 'app_service_index', methods: ['GET'])]
     public function index(ServiceRepository $serviceRepository ,AboutUsRepository $aboutUsRepository): Response
     {
-        return $this->render('service/index.html.twig', [
+        return $this->render('service/base.html.twig', [
             'services' => $serviceRepository->findAll(),
             'aboutUs' => $aboutUsRepository->find(1),
         ]);
