@@ -3,25 +3,24 @@
 namespace App\Controller;
 
 use App\Entity\Product;
-use App\Form\Product2Type;
+use App\Form\ProductType;
+use App\Repository\ProductRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use App\Repository\AboutUsRepository;
 
 #[Route('/product')]
 final class ProductController extends AbstractController
 {
     #[Route(name: 'app_product_index', methods: ['GET'])]
-    public function index(EntityManagerInterface $entityManager): Response
+    public function index(ProductRepository $productRepository ,AboutUsRepository $aboutUs): Response
     {
-        $products = $entityManager
-            ->getRepository(Product::class)
-            ->findAll();
-
-        return $this->render('product/index.html.twig', [
-            'products' => $products,
+        return $this->render('product/base.html.twig', [
+            'products' => $productRepository->findAll(),
+            'aboutUs' => $aboutUs->find(1),
         ]);
     }
 
@@ -29,7 +28,7 @@ final class ProductController extends AbstractController
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $product = new Product();
-        $form = $this->createForm(Product2Type::class, $product);
+        $form = $this->createForm(ProductType::class, $product);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -46,9 +45,10 @@ final class ProductController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_product_show', methods: ['GET'])]
-    public function show(Product $product): Response
+    public function show(Product $product , AboutUsRepository $aboutUs): Response
     {
         return $this->render('product/show.html.twig', [
+            'aboutUs' => $aboutUs->find(1),
             'product' => $product,
         ]);
     }
@@ -56,7 +56,7 @@ final class ProductController extends AbstractController
     #[Route('/{id}/edit', name: 'app_product_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Product $product, EntityManagerInterface $entityManager): Response
     {
-        $form = $this->createForm(Product2Type::class, $product);
+        $form = $this->createForm(ProductType::class, $product);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
