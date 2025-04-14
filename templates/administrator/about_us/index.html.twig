@@ -1,6 +1,14 @@
-<!DOCTYPE html>
+{% extends 'base.html.twig' %}
 
-<title>AboutUs index</title>
+{% block title %}AboutUs index{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/about_us.css') }}">
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('js/about_us.js') }}"></script>
+{% endblock %}
 
 {% block body %}
     <h1>AboutUs index</h1>
@@ -47,3 +55,5 @@
 
     <a href="{{ path('app_administrator_about_us_new') }}">Create new</a>
 {% endblock %}
+
+

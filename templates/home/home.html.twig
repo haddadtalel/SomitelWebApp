@@ -127,7 +127,7 @@
 
 
 
-<!-- /Services Section -->
+<!-- Services Section -->
 
 <section id="Service">
     <div class="container-fluid py-5 wow fadeInUp" data-wow-delay="0.1s">
@@ -158,92 +158,7 @@
     <!-- Service End -->
 
 
-    <!-- Quote Start -->
-<section id="Quote">
-        <div class="container-fluid py-5 wow fadeInUp" data-wow-delay="0.1s">
-            <div class="container py-5">
-                <div class="row g-5">
-                    <div class="col-lg-7">
-                        <div class="section-title position-relative pb-3 mb-5">
-                            <h5 class="fw-bold text-primary text-uppercase">{{ quoteDesc.title }}</h5>
-                            <h1 class="mb-0">{{ quoteDesc.head }}</h1>
-                        </div>
-                        <div class="row gx-3">
-                            {% for item in quoteDesc.quoteItems %}
-                            <div class="col-sm-6 wow zoomIn" data-wow-delay="{{ item.delay }}">
-                                <h5 class="mb-4">
-                                    <i class="{{ item.icon }} text-primary me-3"></i>{{ item.text }}
-                                </h5>
-                            </div>
-                            {% endfor %}
-                        </div>
-                        <p class="mb-4">
-                            {{ quoteDesc.description }}
-                        </p>
-                        <div class="d-flex align-items-center mt-2 wow zoomIn" data-wow-delay="0.6s">
-                            <div class="bg-primary d-flex align-items-center justify-content-center rounded" style="width: 60px; height: 60px;">
-                                <i class="fa fa-phone-alt text-white"></i>
-                            </div>
-                            <div class="ps-4">
-                                <h5 class="mb-2">{{ quoteDesc.contactTitle }}</h5>
-                                <h4 class="text-primary mb-0">{{ quoteDesc.contactNumber }}</h4>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-5">
-                        <div class="bg-primary rounded h-100 d-flex align-items-center p-5 wow zoomIn" data-wow-delay="0.9s">
-                            {% for message in app.flashes('success') %}
-                            <div class="alert alert-success">{{ message }}</div>
-                            {% endfor %}
-                            {{ form_start(form) }}
-                                <div class="row g-3">
-                                    <!-- Name and Last Name Side by Side -->
-                                    <div class="col-md-6">
-                                        {{ form_row(form.name) }}
-                                    </div>
-                                    <div class="col-md-6">
-                                        {{ form_row(form.LastName) }}
-                                    </div>
-    
-                                    <!-- Company and Phone Number Side by Side -->
 
-                                    <div class="col-md-6">
-                                        {{ form_row(form.Phone) }}
-                                    </div>
-    
-                                    <!-- Position and Service Side by Side -->
-                                    <div class="col-md-6">
-                                        {{ form_row(form.Position) }}
-                                    </div>
-
-                                    <div class="col-md-6">
-                                        {{ form_row(form.Company) }}
-                                    </div> 
-                                    <div class="col-md-6">
-                                        {{ form_row(form.Address) }}
-                                    </div>
-                                    <div class="col-md-12">
-                                        {{ form_row(form.Service) }}
-                                    </div>    
-                                    <!-- Message Field -->
-                                    <div class="col-12">
-                                        {{ form_row(form.Message) }}
-                                    </div>
-    
-                                    <!-- Submit Button -->
-                                    <div class="col-12">
-                                        {{ form_row(form.submit) }}
-                                    </div>
-                                </div>
-                            {{ form_end(form) }}
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    
-    <!-- Quote End -->
 
 
     <!-- Vendor Start -->
