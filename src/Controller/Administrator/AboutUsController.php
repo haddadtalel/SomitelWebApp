@@ -25,35 +25,35 @@ final class AboutUsController extends AbstractController
     #[Route('/new', name: 'app_administrator_about_us_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
-        $aboutU = new AboutUs();
-        $form = $this->createForm(AboutUsType::class, $aboutU);
+        $aboutUs = new AboutUs();
+        $form = $this->createForm(AboutUsType::class, $aboutUs);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->persist($aboutU);
+            $entityManager->persist($aboutUs);
             $entityManager->flush();
 
             return $this->redirectToRoute('app_administrator_about_us_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('administrator/about_us/new.html.twig', [
-            'about_u' => $aboutU,
+            'about_us' => $aboutUs,
             'form' => $form,
         ]);
     }
 
     #[Route('/{id}', name: 'app_administrator_about_us_show', methods: ['GET'])]
-    public function show(AboutUs $aboutU): Response
+    public function show(AboutUs $aboutUs): Response
     {
         return $this->render('administrator/about_us/show.html.twig', [
-            'about_u' => $aboutU,
+            'about_us' => $aboutUs,
         ]);
     }
 
     #[Route('/{id}/edit', name: 'app_administrator_about_us_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, AboutUs $aboutU, EntityManagerInterface $entityManager): Response
+    public function edit(Request $request, AboutUs $aboutUs, EntityManagerInterface $entityManager): Response
     {
-        $form = $this->createForm(AboutUsType::class, $aboutU);
+        $form = $this->createForm(AboutUsType::class, $aboutUs);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -63,16 +63,16 @@ final class AboutUsController extends AbstractController
         }
 
         return $this->render('administrator/about_us/edit.html.twig', [
-            'about_u' => $aboutU,
+            'about_us' => $aboutUs,
             'form' => $form,
         ]);
     }
 
     #[Route('/{id}', name: 'app_administrator_about_us_delete', methods: ['POST'])]
-    public function delete(Request $request, AboutUs $aboutU, EntityManagerInterface $entityManager): Response
+    public function delete(Request $request, AboutUs $aboutUs, EntityManagerInterface $entityManager): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$aboutU->getId(), $request->getPayload()->getString('_token'))) {
-            $entityManager->remove($aboutU);
+        if ($this->isCsrfTokenValid('delete'.$aboutUs->getId(), $request->getPayload()->getString('_token'))) {
+            $entityManager->remove($aboutUs);
             $entityManager->flush();
         }
 

@@ -5,6 +5,7 @@
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
  */
 :root {
+    --bs-main:#009CFF; 
     --bs-blue: #0d6efd;
     --bs-indigo: #6610f2;
     --bs-purple: #6f42c1;
@@ -84,7 +85,7 @@ h6,
     font-family: "Roboto", sans-serif;
     font-weight: 700;
     line-height: 1.2;
-    color: #fff
+    color: var(--bs-dark);
 }
 
 h1,

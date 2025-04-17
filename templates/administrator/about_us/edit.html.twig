@@ -3,11 +3,96 @@
 {% block title %}Edit AboutUs{% endblock %}
 
 {% block body %}
-    <h1>Edit AboutUs</h1>
+<h1>Edit AboutUs</h1>
 
+<div style="display: flex; gap: 2rem; align-items: flex-start;">
+  <!-- Form Area -->
+  <div style="flex: 1;">
     {{ include('administrator/about_us/_form.html.twig', {'button_label': 'Update'}) }}
-
-    <a href="{{ path('app_administrator_about_us_index') }}">back to list</a>
-
+    <a href="{{ path('app_administrator_about_us_index') }}">Back to list</a>
     {{ include('administrator/about_us/_delete_form.html.twig') }}
+  </div>
+
+  <!-- Live Preview -->
+  <div style="flex: 1; border: 1px solid #ccc; padding: 20px; background: #f9f9f9;">
+    <section id="About" class="about">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-6 order-1 order-lg-2">
+            <img id="preview-image" src="" class="img-fluid" alt="">
+          </div>
+          <div class="col-lg-6 pt-4 pt-lg-0 order-2 order-lg-1 content">
+            <h1 id="preview-title" class="mb-0"></h1>
+            <p id="preview-description" class="fst-italic"></p>
+            <ul id="preview-features"></ul>
+            <p><strong>Phone:</strong> <span id="preview-phone"></span></p>
+            <p><strong>Email:</strong> <span id="preview-email"></span></p>
+            <p><strong>Address:</strong> <span id="preview-address"></span></p>
+            <div><strong>Links:</strong>
+              <ul id="preview-links"></ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+
+<script>
+  function updatePreview() {
+    document.getElementById('preview-title').textContent = document.getElementById('about_us_title').value;
+    document.getElementById('preview-description').textContent = document.getElementById('about_us_description').value;
+    document.getElementById('preview-image').src = document.getElementById('about_us_image').value;
+
+    document.getElementById('preview-phone').textContent = document.getElementById('about_us_contactNumber').value;
+    document.getElementById('preview-email').textContent = document.getElementById('about_us_Email').value;
+    document.getElementById('preview-address').textContent = document.getElementById('about_us_Address').value;
+
+    const features = document.getElementById('about_us_features').value.split('\n').filter(Boolean);
+    const featuresList = document.getElementById('preview-features');
+    featuresList.innerHTML = '';
+    features.forEach(f => {
+      const li = document.createElement('li');
+      li.textContent = f;
+      featuresList.appendChild(li);
+    });
+
+    const links = document.getElementById('about_us_links').value.split('\n').filter(Boolean);
+    const linksList = document.getElementById('preview-links');
+    linksList.innerHTML = '';
+    links.forEach(link => {
+      const li = document.createElement('li');
+      const a = document.createElement('a');
+      a.href = link;
+      a.textContent = link;
+      a.target = "_blank";
+      li.appendChild(a);
+      linksList.appendChild(li);
+    });
+  }
+
+  // Initialize with current values
+  window.addEventListener('DOMContentLoaded', () => {
+    updatePreview();
+
+    // Attach event listeners
+    const inputs = [
+      'about_us_title',
+      'about_us_description',
+      'about_us_image',
+      'about_us_contactNumber',
+      'about_us_Email',
+      'about_us_Address',
+      'about_us_features',
+      'about_us_links'
+    ];
+
+    inputs.forEach(id => {
+      const el = document.getElementById(id);
+      if (el) {
+        el.addEventListener('input', updatePreview);
+      }
+    });
+  });
+</script>
 {% endblock %}

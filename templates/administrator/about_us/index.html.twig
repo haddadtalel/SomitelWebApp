@@ -1,49 +1,89 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}AboutUs index{% endblock %}
+{% block title %}About Us{% endblock %}
 
 {% block body %}
-    <h1>AboutUs index</h1>
-
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Title</th>
-                <th>Description</th>
-                <th>Features</th>
-                <th>ContactNumber</th>
-                <th>Image</th>
-                <th>Email</th>
-                <th>Address</th>
-                <th>Links</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for about_u in aboutuses %}
-            <tr>
-                <td>{{ about_u.id }}</td>
-                <td>{{ about_u.title }}</td>
-                <td>{{ about_u.description }}</td>
-                <td>{{ about_u.features ? about_u.features|json_encode : '' }}</td>
-                <td>{{ about_u.contactNumber }}</td>
-                <td>{{ about_u.image }}</td>
-                <td>{{ about_u.Email }}</td>
-                <td>{{ about_u.Address }}</td>
-                <td>{{ about_u.Links ? about_u.Links|json_encode : '' }}</td>
-                <td>
-                    <a href="{{ path('app_administrator_about_us_show', {'id': about_u.id}) }}">show</a>
-                    <a href="{{ path('app_administrator_about_us_edit', {'id': about_u.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="10">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-    <a href="{{ path('app_administrator_about_us_new') }}">Create new</a>
+    <div class="col-sm-12">
+        <div class="bg-secondary rounded h-100 p-4">
+            <h6 class="mb-4">About Us</h6>
+            <table class="table table-borderless">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Title</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Features</th>
+                        <th scope="col">Contact</th>
+                        <th scope="col">Image</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Address</th>
+                        <th scope="col">Links</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for about_us in aboutuses %}
+                    <tr>
+                        <th scope="row">{{ about_us.id }}</th>
+                        <td>{{ about_us.title }}</td>
+                        <td>{{ about_us.description|raw }}</td>
+                        <td>
+                            <ul class="list-unstyled">
+                                {% for feature in about_us.features %}
+                                <li>
+                                    <i class="fa fa-check text-primary me-2"></i>
+                                    <strong>{{ feature.title }}:</strong>
+                                    <span class="d-block text-muted small">{{ feature.description }}</span>
+                                </li>
+                                {% else %}
+                                <span class="text-muted">No features</span>
+                                {% endfor %}
+                            </ul>
+                        </td>
+                        <td>{{ about_us.contactNumber }}</td>
+                        <td>
+                            {% if about_us.image %}
+                            <img src="{{ asset(about_us.image) }}" alt="About us image" class="img-thumbnail" style="max-width: 80px">
+                            {% else %}
+                            <span class="text-muted">No image</span>
+                            {% endif %}
+                        </td>
+                        <td>{{ about_us.Email }}</td>
+                        <td>{{ about_us.Address }}</td>
+                        <td>
+                            <ul class="list-unstyled">
+                                {% for link in about_us.Links %}
+                                <li>
+                                    <a href="{{ link.url }}" class="text-primary text-decoration-none">
+                                        <i class="fa fa-link me-2"></i>{{ link.title }}
+                                    </a>
+                                </li>
+                                {% else %}
+                                <span class="text-muted">No links</span>
+                                {% endfor %}
+                            </ul>
+                        </td>
+                        <td>
+                            <div class="d-flex flex-column gap-2">
+                                <a href="{{ path('app_administrator_about_us_show', {'id': about_us.id}) }}" 
+                                   class="btn btn-sm btn-primary">
+                                    <i class="fa fa-eye me-1"></i>Show
+                                </a>
+                                <a href="{{ path('app_administrator_about_us_edit', {'id': about_us.id}) }}" 
+                                   class="btn btn-sm btn-warning">
+                                    <i class="fa fa-edit me-1"></i>Edit
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="10" class="text-center text-muted py-4">No records found</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            <a href="{{ path('app_administrator_about_us_new') }}">Create new</a>
+        </div>
+    </div>
 {% endblock %}
