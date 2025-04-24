@@ -238,7 +238,7 @@ a {
 }
 
 a:hover {
-    color: #bc1212
+    color: #0dcaf0
 }
 
 a:not([href]):not([class]),
@@ -3089,8 +3089,8 @@ fieldset:disabled .btn {
 
 .btn-primary:hover {
     color: #fff;
-    background-color: #c81313;
-    border-color: #bc1212
+    background-color: #0dcaf0;
+    border-color: #0dcaf0
 }
 
 .btn-check:focus+.btn-primary,
@@ -8348,7 +8348,7 @@ fieldset:disabled .btn {
 }
 
 .bg-primary {
-    background-color: #EB1616 !important
+    background-color: var(--bs-blue) !important
 }
 
 .bg-secondary {

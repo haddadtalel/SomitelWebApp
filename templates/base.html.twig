@@ -17,7 +17,9 @@
 
     <!-- Icon Font Stylesheet -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Libraries Stylesheet -->
     <link href="{{ asset('AdminStyle/lib/owlcarousel/assets/owl.carousel.min.css') }}" rel="stylesheet">
@@ -31,6 +33,8 @@
 </head>
 
 <body class="bg-secondary">
+    {% set currentRoute = app.request.attributes.get('_route') %}
+{% set isCmsActive = currentRoute starts with 'app_administrator_about' or currentRoute starts with 'app_administrator_service' %}
     <div class=" container-fluid position-relative d-flex p-0">
         <!-- Spinner Start -->
         <div id="spinner" class="show bg-light position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
@@ -56,12 +60,12 @@
                     </div>
                 </div>
                 <div class="navbar-nav w-100">
-                    <a href="index.html" class="nav-item nav-link active"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
+                    <a href="{{ path ('app_administrator_dashboard')}}" class="nav-item nav-link {{ currentRoute starts with 'app_administrator_dashboard' ? 'active' : '' }}"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
                     <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-laptop me-2"></i>CMS</a>
-                        <div class="dropdown-menu bg-transparent border-0">
-                            <a href="{{ path('app_administrator_about_us_index') }}" class="dropdown-item">AboutUs</a>
-                            <a href="#" class="dropdown-item">Service</a>
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="{{ isCmsActive ? 'true' : 'false' }}"><i class="fa fa-laptop me-2"></i>CMS</a>
+                        <div class="dropdown-menu bg-transparent border-0 {{ isCmsActive ? 'show' : '' }}">
+                            <a href="{{ path('app_administrator_about_us_index') }}" class="nav-item nav-link {{ currentRoute starts with 'app_administrator_about' ? 'active' : '' }}"><i class="bi bi-info-circle-fill me-2"></i>AboutUs</a>
+                            <a href="{{path('app_administrator_service_index')}}" class="nav-item nav-link {{ currentRoute starts with 'app_administrator_service' ? 'active' : '' }} "><i class="fa fa-credit-card me-2"></i>Service</a>
                         </div>
                     </div>
                     <a href="#" class="nav-item nav-link"><i class="fa fa-th me-2"></i>User</a>

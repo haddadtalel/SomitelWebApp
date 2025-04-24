@@ -8,6 +8,8 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use App\Form\FeatureType;
 
 class AboutUsType extends AbstractType
 { 
@@ -18,8 +20,11 @@ class AboutUsType extends AbstractType
         $builder
             ->add('title')
             ->add('description')
-            ->add('features', TextareaType::class, [
-                'attr' => ['rows' => 5] // Optional: improve textarea appearance
+            ->add('features', CollectionType::class, [
+                'entry_type' => FeatureType::class,
+                'allow_add' => true,
+                'allow_delete' => true,
+                'by_reference' => false,
             ])
             ->add('contactNumber')
             ->add('image')
@@ -29,7 +34,7 @@ class AboutUsType extends AbstractType
                 'attr' => ['rows' => 5]
             ]);
         ;
-        $builder->get('features')->addModelTransformer(new JsonToArrayTransformer());
+        /*$builder->get('features')->addModelTransformer(new JsonToArrayTransformer());*/
         $builder->get('links')->addModelTransformer(new JsonToArrayTransformer());
     }
 

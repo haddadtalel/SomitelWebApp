@@ -1,4 +1,23 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+
+    {{ form_row(form.title) }}
+    {{ form_row(form.description) }}
+    <div id="features-collection" data-prototype="{{ form_widget(form.features.vars.prototype)|e('html_attr') }}">
+        {% for feature in form.features %}
+            <div class="feature-item mb-3 border p-2">
+                {{ form_row(feature.title) }}
+                {{ form_row(feature.description) }}
+                <button type="button" class="btn btn-sm btn-danger remove-feature">Remove</button>
+            </div>
+        {% endfor %}
+    </div>
+    <button type="button" class="btn btn-sm btn-primary my-2" id="add-feature">+ Add Feature</button>
+
+    {{ form_row(form.contactNumber) }}
+    {{ form_row(form.image) }}
+    {{ form_row(form.Email) }}
+    {{ form_row(form.Address) }}
+    {{ form_row(form.links) }}
+
+    <button class="btn btn-success">{{ button_label|default('Save') }}</button>
 {{ form_end(form) }}

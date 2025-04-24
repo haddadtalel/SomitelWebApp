@@ -9,7 +9,7 @@ use App\Enity\AboutUs;
 use App\Enity\ContactUs;
 use App\Enity\Home;
 use App\Enity\OurServices;
-class DashboardController extends AbstractController
+class AdminDashboardController extends AbstractController
 {
     #[Route('/administrator/dashboard', name: 'app_administrator_dashboard')]
     public function index(): Response

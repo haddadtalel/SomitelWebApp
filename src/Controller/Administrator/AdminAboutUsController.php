@@ -10,15 +10,16 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use App\src\Controller\Administrator\DashboardController;
 
 #[Route('/administrator/about/us')]
-final class AboutUsController extends AbstractController
+final class AdminAboutUsController extends AbstractController
 {
     #[Route(name: 'app_administrator_about_us_index', methods: ['GET'])]
     public function index(AboutUsRepository $aboutUsRepository): Response
     {
         return $this->render('administrator/about_us/index.html.twig', [
-            'aboutuses' => $aboutUsRepository->findAll(),
+            'aboutUs' => $aboutUsRepository->findAll(),
         ]);
     }
 
@@ -37,7 +38,7 @@ final class AboutUsController extends AbstractController
         }
 
         return $this->render('administrator/about_us/new.html.twig', [
-            'about_us' => $aboutUs,
+            'aboutUs' => $aboutUs,
             'form' => $form,
         ]);
     }
@@ -46,7 +47,7 @@ final class AboutUsController extends AbstractController
     public function show(AboutUs $aboutUs): Response
     {
         return $this->render('administrator/about_us/show.html.twig', [
-            'about_us' => $aboutUs,
+            'aboutUs' => $aboutUs,
         ]);
     }
 
@@ -63,7 +64,7 @@ final class AboutUsController extends AbstractController
         }
 
         return $this->render('administrator/about_us/edit.html.twig', [
-            'about_us' => $aboutUs,
+            'aboutUs' => $aboutUs,
             'form' => $form,
         ]);
     }
