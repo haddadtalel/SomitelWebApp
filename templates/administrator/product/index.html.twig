@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Product index{% endblock %}
+
+{% block body %}
+<div class="col-sm-12">
+    <div class="bg-secondary rounded h-100 p-4">
+    <h1>Product index</h1>
+
+    <table class="table table-borderless">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Category</th>
+                <th>Brand</th>
+                <th>Model</th>
+                <th>Description</th>
+                <th>Price</th>
+                <th>StockQuantity</th>
+                <th>ImageUrl</th>
+                <th>CreatedAt</th>
+                <th>UpdatedAt</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for product in products %}
+            <tr>
+                <td>{{ product.id }}</td>
+                <td>{{ product.name }}</td>
+                <td>{{ product.category }}</td>
+                <td>{{ product.brand }}</td>
+                <td>{{ product.model }}</td>
+                <td>{{ product.description }}</td>
+                <td>{{ product.price }}</td>
+                <td>{{ product.stockQuantity }}</td>
+                <td>
+                    {% if product.imageUrl %}
+                    <img src="{{ asset(product.imageUrl) }}" alt="Product Image" class="img-thumbnail" style="max-width: 80px">
+                    {% else %}
+                    <span class="text-muted">No image</span>
+                    {% endif %}
+                </td>
+                <td>{{ product.createdAt ? product.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ product.updatedAt ? product.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                    <a href="{{ path('app_administrator_product_show', {'id': product.id}) }}">show</a>
+                    <a href="{{ path('app_administrator_product_edit', {'id': product.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="12">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_administrator_product_new') }}">Create new</a>
+</div>
+</div>
+{% endblock %}

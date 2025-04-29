@@ -1,0 +1,109 @@
+{% extends 'user/dashboard/base.html.twig' %}
+
+{% block title %}Dashboard - SOMITEL{% endblock %}
+
+{% block content %}
+<div class="row g-4">
+    <div class="col-12">
+        <div class="bg-light rounded p-4">
+            <h2 class="mb-4">Welcome, {{ app.user.firstName }}!</h2>
+            <p class="mb-0">Welcome to your SOMITEL dashboard. Here you can manage your support tickets, view your profile, and access our shop.</p>
+        </div>
+    </div>
+</div>
+
+<div class="row g-4 mt-2">
+    <div class="col-sm-6 col-xl-3">
+        <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
+            <i class="fa fa-ticket-alt fa-3x text-primary"></i>
+            <div class="ms-3">
+                <p class="mb-2">Support Tickets</p>
+                <h6 class="mb-0">{{ tickets|length }}</h6>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6 col-xl-3">
+        <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
+            <i class="fa fa-shopping-cart fa-3x text-primary"></i>
+            <div class="ms-3">
+                <p class="mb-2">Shop</p>
+                <h6 class="mb-0">Browse Products</h6>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6 col-xl-3">
+        <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
+            <i class="fa fa-user fa-3x text-primary"></i>
+            <div class="ms-3">
+                <p class="mb-2">Profile</p>
+                <h6 class="mb-0">Manage Account</h6>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6 col-xl-3">
+        <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
+            <i class="fa fa-shopping-basket fa-3x text-primary"></i>
+            <div class="ms-3">
+                <p class="mb-2">Cart</p>
+                <h6 class="mb-0">View Cart</h6>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% if tickets is not empty %}
+<div class="row mt-4">
+    <div class="col-12">
+        <div class="bg-light rounded p-4">
+            <div class="d-flex align-items-center justify-content-between mb-4">
+                <h6 class="mb-0">Recent Support Tickets</h6>
+                <a href="{{ path('app_user_tickets') }}">Show All</a>
+            </div>
+            <div class="table-responsive">
+                <table class="table text-start align-middle table-bordered table-hover mb-0">
+                    <thead>
+                        <tr class="text-dark">
+                            <th scope="col">ID</th>
+                            <th scope="col">Subject</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Created</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for ticket in tickets|slice(0, 5) %}
+                            <tr>
+                                <td>#{{ ticket.id }}</td>
+                                <td>{{ ticket.subject }}</td>
+                                <td>
+                                    <span class="badge {{ ticket.statusBadgeClass }}">
+                                        {{ ticket.status|capitalize }}
+                                    </span>
+                                </td>
+                                <td>{{ ticket.createdAt|date('M d, Y') }}</td>
+                                <td>
+                                    <a class="btn btn-sm btn-primary" href="{{ path('app_user_ticket_show', {'id': ticket.id}) }}">
+                                        View
+                                    </a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% else %}
+<div class="row mt-4">
+    <div class="col-12">
+        <div class="bg-light rounded p-4 text-center">
+            <i class="fa fa-ticket-alt fa-4x text-primary mb-3"></i>
+            <h5>No Support Tickets Yet</h5>
+            <p>You haven't created any support tickets yet. Need help with something?</p>
+            <a href="{{ path('app_user_ticket_new') }}" class="btn btn-primary">Create New Ticket</a>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock %}

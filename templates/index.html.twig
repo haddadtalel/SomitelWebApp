@@ -76,20 +76,31 @@
                     <a href="#Service" class="nav-item nav-link">Services</a>
                     <a href="contact.html" class="nav-item nav-link">Contact</a>
                 </div>
-                <butaton type="button" class="btn text-primary ms-3" data-bs-toggle="modal" data-bs-target="#searchModal"><i class="fa fa-search"></i></butaton>
+                <div class="d-flex align-items-center">
+                    <button type="button" class="btn text-primary ms-3" data-bs-toggle="modal" data-bs-target="#searchModal"><i class="fa fa-search"></i></button>
+
+                    <div class="cart-icon-container position-relative ms-3 {% if app.request.cookies.get('PHPSESSID') is null or app.request.cookies.get('PHPSESSID') is empty or not app.session.get('cart_items') %}d-none{% endif %}">
+                        <a href="{{ path('app_cart_index') }}" class="btn text-primary">
+                            <i class="bi bi-cart3 fs-5"></i>
+                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger cart-count">
+                                {{ render(controller('App\\Controller\\User\\CartController::count')) }}
+                            </span>
+                        </a>
+                    </div>
+                </div>
             </div>
         </nav>
-    <!-- Navbar & Carousel end -->    
+    <!-- Navbar & Carousel end -->
     {% block body %}
-    
+
     {% endblock %}
     <!-- Footer Start -->
 <div class="container-fluid bg-dark text-light mt-5 wow fadeInUp" data-wow-delay="0.1s">
         <div class="container">
             <div class="row gx-5">
-                <div class="col-lg-4 col-md-6 footer-about">                      
+                <div class="col-lg-4 col-md-6 footer-about">
                     <div class="d-flex flex-column align-items-center justify-content-center text-center h-100 bg-light p-4" style="margin-left: -50px; width: calc(100% + 50px); height: calc(100% - 50px);">
-                            <div class="section-title text-center position-relative pb-3 mb-4 mx-auto" style="max-width: 600px;">  
+                            <div class="section-title text-center position-relative pb-3 mb-4 mx-auto" style="max-width: 600px;">
                                 <a href="{{path('app_home')}}">
                                     <h1 class="m-0 text-dark"><i class="fa fa-user-tie me-2"></i>Somitel</h1>
                                 </a>
@@ -160,9 +171,9 @@
             <div class="row justify-content-end">
                 <div class="col-lg-8 col-md-6">
                     <div class="d-flex align-items-center justify-content-center" style="height: 75px;">
-                        <p class="mb-0">&copy; <a class="text-white border-bottom" href="#">SOMITEL</a>. All Rights Reserved. 
-						
-						
+                        <p class="mb-0">&copy; <a class="text-white border-bottom" href="#">SOMITEL</a>. All Rights Reserved.
+
+
                     </div>
                 </div>
             </div>
@@ -187,6 +198,7 @@
     <!-- Template Javascript -->
     <script src="{{asset('/BaseStyle/js/main.js')}}"></script>
     <script src="{{asset('/BaseStyle/js/collapse.js')}}"></script>
+    <script src="{{asset('/BaseStyle/js/cart.js')}}"></script>
 </body>
 
 </html>

@@ -1,0 +1,185 @@
+{% extends 'administrator/base.html.twig' %}
+
+{% block title %}Support Tickets - Admin Dashboard{% endblock %}
+
+{% block body %}
+<div class="container-fluid pt-4 px-4">
+    <div class="row g-4">
+        <div class="col-sm-6 col-xl-3">
+            <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
+                <i class="fa fa-ticket-alt fa-3x text-primary"></i>
+                <div class="ms-3">
+                    <p class="mb-2">Open Tickets</p>
+                    <h6 class="mb-0">{{ openTicketsCount }}</h6>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-xl-3">
+            <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
+                <i class="fa fa-spinner fa-3x text-warning"></i>
+                <div class="ms-3">
+                    <p class="mb-2">In Progress</p>
+                    <h6 class="mb-0">{{ inProgressTicketsCount }}</h6>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-xl-3">
+            <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
+                <i class="fa fa-check-circle fa-3x text-success"></i>
+                <div class="ms-3">
+                    <p class="mb-2">Resolved</p>
+                    <h6 class="mb-0">{{ resolvedTicketsCount }}</h6>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-xl-3">
+            <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
+                <i class="fa fa-times-circle fa-3x text-secondary"></i>
+                <div class="ms-3">
+                    <p class="mb-2">Closed</p>
+                    <h6 class="mb-0">{{ closedTicketsCount }}</h6>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="bg-light rounded p-4">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h5 class="mb-0">Support Tickets</h5>
+                    <div>
+                        <button class="btn btn-sm btn-outline-primary me-2" id="filterAll">All</button>
+                        <button class="btn btn-sm btn-outline-info me-2" id="filterOpen">Open</button>
+                        <button class="btn btn-sm btn-outline-warning me-2" id="filterInProgress">In Progress</button>
+                        <button class="btn btn-sm btn-outline-success me-2" id="filterResolved">Resolved</button>
+                        <button class="btn btn-sm btn-outline-secondary" id="filterClosed">Closed</button>
+                    </div>
+                </div>
+                
+                <div class="table-responsive">
+                    <table class="table table-hover" id="ticketsTable">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Subject</th>
+                                <th>User</th>
+                                <th>Category</th>
+                                <th>Status</th>
+                                <th>Priority</th>
+                                <th>Created</th>
+                                <th>Last Updated</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for ticket in tickets %}
+                                <tr data-status="{{ ticket.status }}">
+                                    <td>#{{ ticket.id }}</td>
+                                    <td>{{ ticket.subject }}</td>
+                                    <td>{{ ticket.user.fullName }}</td>
+                                    <td>{{ ticket.category|replace({'_': ' '})|title }}</td>
+                                    <td>
+                                        <span class="badge {{ ticket.statusBadgeClass }}">
+                                            {{ ticket.status|capitalize }}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <span class="badge {{ ticket.priorityBadgeClass }}">
+                                            {{ ticket.priority|capitalize }}
+                                        </span>
+                                    </td>
+                                    <td>{{ ticket.createdAt|date('M d, Y') }}</td>
+                                    <td>{{ ticket.updatedAt|date('M d, Y') }}</td>
+                                    <td>
+                                        <a href="{{ path('app_administrator_ticket_show', {'id': ticket.id}) }}" class="btn btn-sm btn-primary">
+                                            <i class="fa fa-eye"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const filterAll = document.getElementById('filterAll');
+        const filterOpen = document.getElementById('filterOpen');
+        const filterInProgress = document.getElementById('filterInProgress');
+        const filterResolved = document.getElementById('filterResolved');
+        const filterClosed = document.getElementById('filterClosed');
+        const rows = document.querySelectorAll('#ticketsTable tbody tr');
+        
+        // Set active filter
+        function setActiveFilter(button) {
+            [filterAll, filterOpen, filterInProgress, filterResolved, filterClosed].forEach(btn => {
+                btn.classList.remove('btn-primary');
+                btn.classList.add('btn-outline-primary');
+            });
+            
+            button.classList.remove('btn-outline-primary');
+            button.classList.add('btn-primary');
+        }
+        
+        // Filter tickets
+        filterAll.addEventListener('click', function() {
+            rows.forEach(row => row.style.display = '');
+            setActiveFilter(this);
+        });
+        
+        filterOpen.addEventListener('click', function() {
+            rows.forEach(row => {
+                if (row.dataset.status === 'open') {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+            setActiveFilter(this);
+        });
+        
+        filterInProgress.addEventListener('click', function() {
+            rows.forEach(row => {
+                if (row.dataset.status === 'in_progress') {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+            setActiveFilter(this);
+        });
+        
+        filterResolved.addEventListener('click', function() {
+            rows.forEach(row => {
+                if (row.dataset.status === 'resolved') {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+            setActiveFilter(this);
+        });
+        
+        filterClosed.addEventListener('click', function() {
+            rows.forEach(row => {
+                if (row.dataset.status === 'closed') {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+            setActiveFilter(this);
+        });
+        
+        // Set default filter to All
+        filterAll.click();
+    });
+</script>
+{% endblock %}

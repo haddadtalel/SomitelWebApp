@@ -1,0 +1,94 @@
+{% extends 'user/dashboard/base.html.twig' %}
+
+{% block title %}My Profile - SOMITEL{% endblock %}
+
+{% block content %}
+<div class="row g-4">
+    <div class="col-12">
+        <div class="bg-light rounded p-4">
+            <h2 class="mb-4">My Profile</h2>
+            
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card mb-4">
+                        <div class="card-body text-center">
+                            <div class="mb-3">
+                                <i class="fa fa-user-circle fa-6x text-primary"></i>
+                            </div>
+                            <h5 class="card-title">{{ app.user.fullName }}</h5>
+                            <p class="card-text text-muted">{{ app.user.email }}</p>
+                            <p class="card-text">
+                                <span class="badge bg-success">Verified User</span>
+                            </p>
+                            <p class="card-text text-muted">
+                                Member since {{ app.user.createdAt|date('F Y') }}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-8">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title mb-0">Account Information</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="row mb-3">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Full Name</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    {{ app.user.fullName }}
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row mb-3">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Email</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    {{ app.user.email }}
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row mb-3">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Phone</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    {{ app.user.phone ?: 'Not provided' }}
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row mb-3">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Company</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    {{ app.user.company ?: 'Not provided' }}
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row mb-3">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Address</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    {{ app.user.address ?: 'Not provided' }}
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <a class="btn btn-primary" href="#">Edit Profile</a>
+                                    <a class="btn btn-outline-primary" href="#">Change Password</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

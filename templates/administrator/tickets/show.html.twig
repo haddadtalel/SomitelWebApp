@@ -1,0 +1,220 @@
+{% extends 'administrator/base.html.twig' %}
+
+{% block title %}Ticket #{{ ticket.id }} - Admin Dashboard{% endblock %}
+
+{% block body %}
+<div class="container-fluid pt-4 px-4">
+    <div class="row g-4">
+        <div class="col-12">
+            <div class="bg-light rounded p-4">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h2 class="mb-0">Ticket #{{ ticket.id }}</h2>
+                    <a href="{{ path('app_administrator_tickets') }}" class="btn btn-secondary">
+                        <i class="fa fa-arrow-left me-2"></i> Back to Tickets
+                    </a>
+                </div>
+                
+                <div class="row mb-4">
+                    <div class="col-md-8">
+                        <h4>{{ ticket.subject }}</h4>
+                        <p class="text-muted mb-0">Created by {{ ticket.user.fullName }} on {{ ticket.createdAt|date('F d, Y \a\t h:i a') }}</p>
+                    </div>
+                    <div class="col-md-4 text-md-end">
+                        <span class="badge {{ ticket.statusBadgeClass }} me-2">{{ ticket.status|capitalize }}</span>
+                        <span class="badge {{ ticket.priorityBadgeClass }}">{{ ticket.priority|capitalize }}</span>
+                    </div>
+                </div>
+                
+                <div class="card mb-4">
+                    <div class="card-header bg-primary text-white">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <i class="fa fa-info-circle me-2"></i> Ticket Details
+                            </div>
+                            <div>
+                                <form method="post" action="{{ path('app_administrator_ticket_status', {'id': ticket.id}) }}" class="d-inline">
+                                    <div class="input-group input-group-sm">
+                                        <select name="status" class="form-select form-select-sm">
+                                            {% for label, value in ticket.getStatusChoices() %}
+                                                <option value="{{ value }}" {% if ticket.status == value %}selected{% endif %}>{{ label }}</option>
+                                            {% endfor %}
+                                        </select>
+                                        <button type="submit" class="btn btn-light btn-sm">Update Status</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p><strong>User:</strong> {{ ticket.user.fullName }}</p>
+                                <p><strong>Email:</strong> {{ ticket.user.email }}</p>
+                                <p><strong>Phone:</strong> {{ ticket.user.phone ?: 'Not provided' }}</p>
+                                <p><strong>Category:</strong> {{ ticket.category|replace({'_': ' '})|title }}</p>
+                            </div>
+                            <div class="col-md-6">
+                                <p><strong>Status:</strong> <span class="badge {{ ticket.statusBadgeClass }}">{{ ticket.status|capitalize }}</span></p>
+                                <p><strong>Priority:</strong> <span class="badge {{ ticket.priorityBadgeClass }}">{{ ticket.priority|capitalize }}</span></p>
+                                <p><strong>Created:</strong> {{ ticket.createdAt|date('F d, Y \a\t h:i a') }}</p>
+                                <p><strong>Last Updated:</strong> {{ ticket.updatedAt|date('F d, Y \a\t h:i a') }}</p>
+                            </div>
+                        </div>
+                        <hr>
+                        <h5>Description</h5>
+                        <p>{{ ticket.description|nl2br }}</p>
+                    </div>
+                </div>
+                
+                <div class="card mb-4">
+                    <div class="card-header bg-primary text-white">
+                        <i class="fa fa-comments me-2"></i> Conversation
+                    </div>
+                    <div class="card-body">
+                        <div class="message-container admin-message-container" id="messageContainer">
+                            {% if messages is empty %}
+                                <div class="text-center py-4">
+                                    <i class="fa fa-comments fa-3x text-muted mb-3"></i>
+                                    <p>No messages yet. Start the conversation by sending a message below.</p>
+                                </div>
+                            {% else %}
+                                {% for message in messages %}
+                                    <div class="message {% if message.isFromAdmin %}message-admin{% else %}message-user{% endif %}">
+                                        <div class="message-header">
+                                            <strong>
+                                                {% if message.isFromAdmin %}
+                                                    Support Team
+                                                {% else %}
+                                                    {{ ticket.user.fullName }}
+                                                {% endif %}
+                                            </strong>
+                                            <span class="text-muted">{{ message.createdAt|date('M d, Y h:i a') }}</span>
+                                        </div>
+                                        <div class="message-body">
+                                            {{ message.content|nl2br }}
+                                            
+                                            {% if message.hasAttachment %}
+                                                <div class="message-attachment mt-2">
+                                                    <a href="{{ asset('uploads/attachments/' ~ message.attachment) }}" target="_blank" class="btn btn-sm btn-outline-primary">
+                                                        <i class="fa fa-paperclip me-1"></i>
+                                                        {% if message.attachmentType starts with 'image/' %}
+                                                            View Image
+                                                        {% else %}
+                                                            Download Attachment
+                                                        {% endif %}
+                                                    </a>
+                                                </div>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+                        
+                        {% if ticket.status != 'closed' %}
+                            <div class="reply-form mt-4">
+                                <h5>Reply</h5>
+                                {{ form_start(form) }}
+                                    <div class="mb-3">
+                                        {{ form_widget(form.content) }}
+                                        {{ form_errors(form.content) }}
+                                    </div>
+                                    
+                                    <div class="mb-3">
+                                        {{ form_label(form.attachment) }}
+                                        {{ form_widget(form.attachment) }}
+                                        {{ form_errors(form.attachment) }}
+                                        <div class="form-text">Max file size: 5MB. Allowed file types: images, PDF, Word, Excel.</div>
+                                    </div>
+                                    
+                                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                        <button type="submit" class="btn btn-primary">
+                                            <i class="fa fa-paper-plane me-2"></i> Send Message
+                                        </button>
+                                    </div>
+                                {{ form_end(form) }}
+                            </div>
+                        {% else %}
+                            <div class="alert alert-secondary mt-4">
+                                <i class="fa fa-lock me-2"></i> This ticket is closed. You cannot send any more messages.
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Scroll to bottom of message container
+        const messageContainer = document.getElementById('messageContainer');
+        if (messageContainer) {
+            messageContainer.scrollTop = messageContainer.scrollHeight;
+        }
+        
+        // Set up real-time updates
+        const ticketId = {{ ticket.id }};
+        let lastMessageId = {% if messages is not empty %}{{ messages|last.id }}{% else %}0{% endif %};
+        
+        function checkForNewMessages() {
+            fetch(`/administrator/tickets/${ticketId}/messages?since=${lastMessageId}`, {
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.messages && data.messages.length > 0) {
+                    // Update lastMessageId
+                    lastMessageId = data.messages[data.messages.length - 1].id;
+                    
+                    // Add new messages to the container
+                    data.messages.forEach(message => {
+                        const messageElement = document.createElement('div');
+                        messageElement.className = `message ${message.isFromAdmin ? 'message-admin' : 'message-user'}`;
+                        
+                        let attachmentHtml = '';
+                        if (message.hasAttachment) {
+                            attachmentHtml = `
+                                <div class="message-attachment mt-2">
+                                    <a href="/uploads/attachments/${message.attachment}" target="_blank" class="btn btn-sm btn-outline-primary">
+                                        <i class="fa fa-paperclip me-1"></i>
+                                        ${message.attachmentType.startsWith('image/') ? 'View Image' : 'Download Attachment'}
+                                    </a>
+                                </div>
+                            `;
+                        }
+                        
+                        messageElement.innerHTML = `
+                            <div class="message-header">
+                                <strong>${message.isFromAdmin ? 'Support Team' : message.senderName}</strong>
+                                <span class="text-muted">${message.createdAt}</span>
+                            </div>
+                            <div class="message-body">
+                                ${message.content.replace(/\n/g, '<br>')}
+                                ${attachmentHtml}
+                            </div>
+                        `;
+                        
+                        messageContainer.appendChild(messageElement);
+                    });
+                    
+                    // Scroll to bottom
+                    messageContainer.scrollTop = messageContainer.scrollHeight;
+                    
+                    // Play notification sound
+                    const audio = new Audio('/BaseStyle/sounds/notification.mp3');
+                    audio.play();
+                }
+            });
+        }
+        
+        // Check for new messages every 10 seconds
+        setInterval(checkForNewMessages, 10000);
+    });
+</script>
+{% endblock %}

@@ -32,9 +32,9 @@
     <link href="{{ asset('AdminStyle/css/style.css') }}" rel="stylesheet">
 </head>
 
-<body class="bg-secondary">
+<body >
     {% set currentRoute = app.request.attributes.get('_route') %}
-{% set isCmsActive = currentRoute starts with 'app_administrator_about' or currentRoute starts with 'app_administrator_service' %}
+    {% set isCmsActive = currentRoute starts with 'app_administrator_about' or currentRoute starts with 'app_administrator_service' %}
     <div class=" container-fluid position-relative d-flex p-0">
         <!-- Spinner Start -->
         <div id="spinner" class="show bg-light position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
@@ -70,7 +70,7 @@
                     </div>
                     <a href="#" class="nav-item nav-link"><i class="fa fa-th me-2"></i>User</a>
                     <a href="#" class="nav-item nav-link"><i class="fa fa-keyboard me-2"></i>Tickets</a>
-                    <a href="#" class="nav-item nav-link"><i class="fa fa-chart-bar me-2"></i>Products</a>
+                    <a href="{{path('app_administrator_product_index')}}" class="nav-item nav-link"><i class="fa fa-chart-bar me-2"></i>Products</a>
                     <a href="#" class="nav-item nav-link"><i class="fa fa-table me-2"></i>Sales</a>
                 </div>
             </nav>

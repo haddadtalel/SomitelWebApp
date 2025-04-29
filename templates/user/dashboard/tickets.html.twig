@@ -1,0 +1,78 @@
+{% extends 'user/dashboard/base.html.twig' %}
+
+{% block title %}Support Tickets - SOMITEL{% endblock %}
+
+{% block content %}
+<div class="row g-4">
+    <div class="col-12">
+        <div class="bg-light rounded p-4">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2 class="mb-0">Support Tickets</h2>
+                <a href="{{ path('app_user_ticket_new') }}" class="btn btn-primary">
+                    <i class="fa fa-plus me-2"></i> New Ticket
+                </a>
+            </div>
+            
+            {% if tickets is empty %}
+                <div class="text-center py-5">
+                    <i class="fa fa-ticket-alt fa-4x text-primary mb-3"></i>
+                    <h5>No Support Tickets Yet</h5>
+                    <p>You haven't created any support tickets yet. Need help with something?</p>
+                    <a href="{{ path('app_user_ticket_new') }}" class="btn btn-primary">Create New Ticket</a>
+                </div>
+            {% else %}
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Subject</th>
+                                <th>Category</th>
+                                <th>Status</th>
+                                <th>Priority</th>
+                                <th>Created</th>
+                                <th>Last Updated</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for ticket in tickets %}
+                                <tr>
+                                    <td>#{{ ticket.id }}</td>
+                                    <td>{{ ticket.subject }}</td>
+                                    <td>{{ ticket.category|replace({'_': ' '})|title }}</td>
+                                    <td>
+                                        <span class="badge {{ ticket.statusBadgeClass }}">
+                                            {{ ticket.status|capitalize }}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <span class="badge {{ ticket.priorityBadgeClass }}">
+                                            {{ ticket.priority|capitalize }}
+                                        </span>
+                                    </td>
+                                    <td>{{ ticket.createdAt|date('M d, Y') }}</td>
+                                    <td>{{ ticket.updatedAt|date('M d, Y') }}</td>
+                                    <td>
+                                        <a href="{{ path('app_user_ticket_show', {'id': ticket.id}) }}" class="btn btn-sm btn-primary">
+                                            <i class="fa fa-eye"></i>
+                                        </a>
+                                        {% if ticket.status != 'closed' %}
+                                            <form method="post" action="{{ path('app_user_ticket_close', {'id': ticket.id}) }}" class="d-inline">
+                                                <input type="hidden" name="_token" value="{{ csrf_token('close' ~ ticket.id) }}">
+                                                <button class="btn btn-sm btn-secondary" onclick="return confirm('Are you sure you want to close this ticket?')">
+                                                    <i class="fa fa-times"></i>
+                                                </button>
+                                            </form>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

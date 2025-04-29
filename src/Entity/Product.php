@@ -47,7 +47,6 @@ class Product
     #[ORM\Column(type: "string", length: 255, nullable: true)]
     private ?string $imageUrl = null;
 
-    // Removed database default options so Doctrine always provides a value.
     #[ORM\Column(type: "datetime_immutable")]
     private ?\DateTimeImmutable $createdAt = null;
 
@@ -56,12 +55,10 @@ class Product
 
     public function __construct()
     {
-        // Initialize with current date/time.
         $this->createdAt = new \DateTimeImmutable();
         $this->updatedAt = new \DateTime();
     }
 
-    // --- Getters and Setters ---
 
     public function getId(): ?int
     {
@@ -177,12 +174,11 @@ class Product
         return $this;
     }
 
-    // --- Lifecycle Callbacks ---
 
     #[ORM\PrePersist]
     public function prePersist(): void
     {
-        // If not already set, assign current datetime.
+        
         if ($this->createdAt === null) {
             $this->createdAt = new \DateTimeImmutable();
         }
